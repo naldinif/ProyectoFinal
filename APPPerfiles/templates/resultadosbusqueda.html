@@ -1,9 +1,9 @@
-<!-- templates/APPPerfiles/resultadosbusqueda.html -->
 
 
 {% extends 'padre.html' %}
 
 {% block contenidoQueCambia %}
+<!-- templates/APPPerfiles/resultadosbusqueda.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -21,11 +21,10 @@
     </form>
 
     {% if usuarios %}
-        <h2>Usuarios Encontrados:</h2>
-        <ul>
-            {% for usuario in usuarios %}
+    <h2>Usuarios Encontrados:</h2>
+    <ul>
+        {% for usuario in usuarios %}
             <li>
-
                 Nombre: {{ usuario.nombre }}<br>
                 Apellido: {{ usuario.apellido }}<br>
                 Correo Electrónico: {{ usuario.email }}<br>
@@ -35,14 +34,12 @@
         {% empty %}
             <li>No se encontraron usuarios con ese nombre.</li>
         {% endfor %}
-        </ul>
+    </ul>
     {% else %}
-        <p>No se encontraron usuarios con ese nombre.</p>
+    <p>No se encontraron usuarios con ese nombre.</p>
     {% endif %}
     
 </body>
 </html>
-
-
 
 {% endblock %}

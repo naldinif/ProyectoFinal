@@ -18,6 +18,14 @@ def editar_usuario_desde_resultados(request, usuario_id):
 
     return render(request, 'editarusuario.html', {'usuario': usuario})
 
+    
+
+def resultados_busqueda(request):
+    nombre = request.GET.get('nombre', '')
+    usuarios = Usuario.objects.filter(nombre__icontains=nombre)
+    return render(request, 'resultadosbusqueda.html', {'usuarios': usuarios, 'nombre': nombre})
+
+
 
 def eliminar_usuario_desde_resultados(request, usuario_id):
     usuario = Usuario.objects.get(pk=usuario_id)
@@ -27,11 +35,3 @@ def eliminar_usuario_desde_resultados(request, usuario_id):
         return redirect('resultadosbusqueda')
     
     return render(request, 'eliminarusuario.html', {'usuario': usuario})
-
-
-
-
-def resultados_busqueda(request):
-    nombre = request.GET.get('nombre', '')
-    usuarios = Usuario.objects.filter(nombre__icontains=nombre)
-    return render(request, 'resultadosbusqueda.html', {'usuarios': usuarios, 'nombre': nombre})
