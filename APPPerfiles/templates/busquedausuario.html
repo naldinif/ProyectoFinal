@@ -1,0 +1,24 @@
+
+{% extends 'padre.html' %}
+
+{% block contenidoQueCambia %}
+    <!-- templates/APPPerfiles/busquedausuario.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de Usuarios</title>
+</head>
+<body>
+    <h1>Búsqueda de Usuarios</h1>
+    
+    <form action="{% url 'resultadosbusqueda' %}" method="get">
+        <label for="nombre">Nombre de usuario:</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Nombre de usuario">
+        <button type="submit">Buscar</button>
+    </form>
+</body>
+</html>
+
+{% endblock %}

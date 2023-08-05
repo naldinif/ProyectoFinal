@@ -1,0 +1,8 @@
+{% extends 'padre.html' %}
+
+{% block contenidoQueCambia %}
+    <!---En este lugar está todo lo que cambia, por encima PADRE por debajo hijo-->
+    <div class="center-button" style="margin-top: 150px;">
+        <a class="btn btn-primary" href="{% url 'signup' %}">Registrarse</a>
+    </div>
+{% endblock %}
