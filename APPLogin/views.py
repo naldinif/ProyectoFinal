@@ -1,28 +1,25 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from APPLogin.forms import LoginForm
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from .forms import LoginForm
+from APPRegistro.models import Usuario
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 def login_view(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=email, password=password)
-            print(f"Email ingresado: {email}")  # Agrega este print statement
-            if user is not None:
-                login(request, user)
-                return redirect('inicio_exitoso')
+        nombre = request.POST['nombre']
+        try:
+            usuario = Usuario.objects.get(nombre=nombre)
+            if usuario:
+                request.session['user_id'] = usuario.id  # Almacena el ID del usuario en la sesión
+                return redirect('dashboard')  # Redirige a la página del panel de control
             else:
-                error_msg = "Credenciales inválidas. Inténtalo de nuevo."
-                return render(request, 'login.html', {'form': form, 'error_msg': error_msg})
-    else:
-        form = LoginForm()
+                error_message = "Autenticación fallida."
+                return render(request, 'login.html', {'error_message': error_message})
+        except Usuario.DoesNotExist:
+            error_message = "Nombre no encontrado. Verifique que el nombre ingresado corresponda con el registrado"
+            return render(request, 'login.html', {'error_message': error_message})
+    return render(request, 'login.html')
 
-    return render(request, 'login.html', {'form': form})
-
-def inicio_exitoso_view(request):
-    return render(request, 'inicio_exitoso.html')
+def dashboard_view(request):
+    user_id = request.session.get('user_id')
+    usuario = Usuario.objects.get(id=user_id)
+    return render(request, 'dashboard.html', {'usuario': usuario})
